@@ -20,7 +20,8 @@
             <div class="sm:w-1/2 ml-auto mt-2">
                 <div class="flex flex-wrap -m-2">
                     <div class="p-2 w-full">
-                        <button {{-- onclick="location.href='{{ route('admin.categories.create') }}'" --}}
+                        <button
+                            onclick="location.href='{{ route('admin.categories.quizzes.create', ['categoryId' => $category->id]) }}'"
                             class="flex mx-auto text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">
                             クイズ新規登録
                         </button>
