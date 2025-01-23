@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     //管理画面トップページ
-    Route::get('/admin/top', function () {
+    Route::get('top', function () {
         return view('admin.top');
-    })->name('admin.top');
+    })->name('top');
+
+    //カテゴリー管理
+    Route::prefix('categories')->name('categories.')->group(function () {
+        //カテゴリー新規登録画面
+        Route::get('create', [CategoryController::class, 'create'])->name('create');
+        Route::post('store', [CategoryController::class, 'store'])->name('store');
+    });
 });
