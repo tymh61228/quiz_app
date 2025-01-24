@@ -29,4 +29,20 @@ class PlayController extends Controller
             'quizzesCount' => $category->quizzes_count,
         ]);
     }
+
+    /**
+     * クイズ出題画面
+     */
+    public function quizzes(Request $request, int $categoryId)
+    {
+        $category = Category::with('quizzes.options')->findOrFail($categoryId);
+
+        $quizzes = $category->quizzes->toArray();
+        shuffle($quizzes);
+        $quiz = $quizzes[0];
+
+        return view('play.quizzes', [
+            'quiz' => $quiz,
+        ]);
+    }
 }
