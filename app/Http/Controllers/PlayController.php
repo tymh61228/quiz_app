@@ -42,16 +42,7 @@ class PlayController extends Controller
         $resultArray = session('resultArray');
 
         if (is_null($resultArray)) {
-            $quizIds = $category->quizzes->pluck('id')->toArray();
-            shuffle($quizIds);
-            $resultArray = [];
-
-            foreach ($quizIds as $quizId) {
-                $resultArray[] = [
-                    'quizId' => $quizId,
-                    'result' => null,
-                ];
-            }
+            $resultArray = $this->setResultArrayForSession($category);
             session(['resultArray' => $resultArray]);
         }
 
@@ -120,6 +111,24 @@ class PlayController extends Controller
             'questionCount' => $questionCount,
             'correctCount'  => $correctCount,
         ]);
+    }
+
+    /**
+     * 初回の時にセッションにクイズのIDと解答状況を保存
+     */
+    private function setResultArrayForSession(Category $category)
+    {
+        $quizIds = $category->quizzes->pluck('id')->toArray();
+        shuffle($quizIds);
+        $resultArray = [];
+
+        foreach ($quizIds as $quizId) {
+            $resultArray[] = [
+                'quizId' => $quizId,
+                'result' => null,
+            ];
+        }
+        return $resultArray;
     }
 
     /**
