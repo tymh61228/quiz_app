@@ -30,7 +30,7 @@
                         @enderror
                     </div>
                     @for ($i = 1; $i <= 4; $i++)
-                        <input type="hiddne" name="optionId{{ $i }}" value="{{ $options[$i - 1]->id }}">
+                        <input type="hidden" name="optionId{{ $i }}" value="{{ $options[$i - 1]->id }}">
                         <div class="p-2 w-full">
                             <div class="relative">
                                 <label for="content{{ $i }}"
