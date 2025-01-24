@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PlayController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('play.top');
-});
+//プレイヤー画面
+Route::get('/', [PlayController::class, 'top'])->name('top');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
