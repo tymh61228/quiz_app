@@ -2,14 +2,14 @@
     <section class="text-gray-600 body-font relative mt-5">
         <div class="container px-5 py-6 mx-auto">
             <div class="flex flex-col text-center w-full mb-12">
-                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">カテゴリー一覧</h1>
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Category</h1>
             </div>
             <div class="sm:w-1/2 ml-auto">
                 <div class="flex flex-wrap -m-2">
                     <div class="p-2 w-full">
                         <button onclick="location.href='{{ route('admin.categories.create') }}'"
                             class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-                            カテゴリー新規登録
+                            Create Category
                         </button>
                     </div>
                 </div>
@@ -27,17 +27,17 @@
                                 ID</th>
                             <th
                                 class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                カテゴリー名</th>
+                                Category Name</th>
                             <th
                                 class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                更新日時</th>
+                                Update Date</th>
                             <th
                                 class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                詳細
+                                Detail
                             </th>
                             <th
                                 class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                削除
+                                delete
                             </th>
                         </tr>
                     </thead>
@@ -51,7 +51,7 @@
                                     <button
                                         onclick="location.href='{{ route('admin.categories.show', ['categoryId' => $category->id]) }}'"
                                         class="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                                        詳細
+                                        Detail
                                     </button>
                                 </td>
                                 <td class="px-4 py-3 text-lg text-gray-900">
@@ -60,7 +60,7 @@
                                         @csrf
                                         <button type="submit"
                                             class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                                            削除
+                                            Delete
                                         </button>
                                     </form>
                                 </td>

@@ -1,7 +1,7 @@
 <x-admin-layout>
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-24 mx-auto">
-            <div class="flex flex-col text-center w-full mb-5">
+            <div class="flex flex-col text-center w-full">
                 <h1 class="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">{{ $category->name }}</h1>
                 <p class="lg:w-2/3 mx-auto leading-relaxed text-base">{{ $category->description }}</p>
             </div>
@@ -12,7 +12,7 @@
                         <button
                             onclick="location.href='{{ route('admin.categories.edit', ['categoryId' => $category->id]) }}'"
                             class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-                            カテゴリー編集
+                            Edit
                         </button>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                         <button
                             onclick="location.href='{{ route('admin.categories.quizzes.create', ['categoryId' => $category->id]) }}'"
                             class="flex mx-auto text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">
-                            クイズ新規登録
+                            Create
                         </button>
                     </div>
                 </div>
@@ -45,17 +45,17 @@
                                     ID</th>
                                 <th
                                     class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                    クイズ問題文</th>
+                                    Quiz</th>
                                 <th
                                     class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                    更新日時</th>
+                                    Update Date</th>
                                 <th
                                     class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                    編集
+                                    Edit
                                 </th>
                                 <th
                                     class="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                    削除
+                                    Delete
                                 </th>
                             </tr>
                         </thead>
@@ -71,7 +71,7 @@
                                         <button
                                             onclick="location.href='{{ route('admin.categories.quizzes.edit', ['categoryId' => $category->id, 'quizId' => $quiz->id]) }}'"
                                             class="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                                            編集
+                                            Edit
                                         </button>
                                     </td>
                                     <td class="px-4 py-3 text-lg text-gray-900">
@@ -80,7 +80,7 @@
                                             @csrf
                                             <button
                                                 class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                                                削除
+                                                Delete
                                             </button>
                                         </form>
                                     </td>
