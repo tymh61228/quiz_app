@@ -23,6 +23,8 @@ class PlayController extends Controller
      */
     public function categories(Request $request, int $categoryId)
     {
+        session()->forget('resultArray');
+
         $category = Category::withCount('quizzes')->findOrFail($categoryId);
         return view('play.start', [
             'category' => $category,
@@ -37,9 +39,30 @@ class PlayController extends Controller
     {
         $category = Category::with('quizzes.options')->findOrFail($categoryId);
 
-        $quizzes = $category->quizzes->toArray();
-        shuffle($quizzes);
-        $quiz = $quizzes[0];
+        $resultArray = session('resultArray');
+
+        if (is_null($resultArray)) {
+            $quizIds = $category->quizzes->pluck('id')->toArray();
+            shuffle($quizIds);
+            $resultArray = [];
+
+            foreach ($quizIds as $quizId) {
+                $resultArray[] = [
+                    'quizId' => $quizId,
+                    'result' => null,
+                ];
+            }
+            session(['resultArray' => $resultArray]);
+        }
+
+        $noAnswerResult = collect($resultArray)->filter(function ($item) {
+            return $item['result'] === null;
+        })->first();
+
+        if (!$noAnswerResult) {
+        }
+
+        $quiz = $category->quizzes->firstWhere('id', $noAnswerResult['quizId'])->toArray();
 
         return view('play.quizzes', [
             'categoryId' => $categoryId,
@@ -60,6 +83,16 @@ class PlayController extends Controller
         $quizOptions = $quiz->options->toArray();
 
         $isCorrectAnswer = $this->isCorrectAnswer($selectedOptions,  $quizOptions);
+
+        $resultArray = session('resultArray');
+
+        foreach ($resultArray as $index => $result) {
+            if ($result['quizId'] === (int)$quizId) {
+                $resultArray[$index]['result'] = $isCorrectAnswer;
+                break;
+            }
+        }
+        session(['resultArray' => $resultArray]);
 
         return view('play.answer', [
             'isCorrectAnswer'   => $isCorrectAnswer,
