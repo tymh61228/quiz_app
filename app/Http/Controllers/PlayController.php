@@ -60,6 +60,7 @@ class PlayController extends Controller
         })->first();
 
         if (!$noAnswerResult) {
+            return redirect()->route('categories.quizzes.result', ['categoryId' => $categoryId]);
         }
 
         $quiz = $category->quizzes->firstWhere('id', $noAnswerResult['quizId'])->toArray();
@@ -100,6 +101,24 @@ class PlayController extends Controller
             'quizOptions'       => $quizOptions,
             'selectedOptions'   => $selectedOptions,
             'categoryId'        => $categoryId,
+        ]);
+    }
+
+    /**
+     * リザルト画面表示
+     */
+    public function result(Request $request, int $categoryId)
+    {
+        $resultArray = session('resultArray');
+        $questionCount = count($resultArray);
+        $correctCount = collect($resultArray)->filter(function ($result) {
+            return $result['result'] === true;
+        })->count();
+
+        return view('play.result', [
+            'categoryId'    => $categoryId,
+            'questionCount' => $questionCount,
+            'correctCount'  => $correctCount,
         ]);
     }
 
