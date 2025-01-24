@@ -42,7 +42,57 @@ class PlayController extends Controller
         $quiz = $quizzes[0];
 
         return view('play.quizzes', [
+            'categoryId' => $categoryId,
             'quiz' => $quiz,
         ]);
+    }
+
+    /**
+     * クイズ解答画面
+     */
+    public function answer(Request $request, int $categoryId)
+    {
+        $quizId = $request->quizId;
+        $selectedOptions = $request->optionId === null ? [] : $request->optionId;
+
+        $category = Category::with('quizzes.options')->findOrFail($categoryId);
+        $quiz = $category->quizzes->firstWhere('id', $quizId);
+        $quizOptions = $quiz->options->toArray();
+
+        $isCorrectAnswer = $this->isCorrectAnswer($selectedOptions,  $quizOptions);
+
+        return view('play.answer', [
+            'isCorrectAnswer'   => $isCorrectAnswer,
+            'quiz'              => $quiz->toArray(),
+            'quizOptions'       => $quizOptions,
+            'selectedOptions'   => $selectedOptions,
+            'categoryId'        => $categoryId,
+        ]);
+    }
+
+    /**
+     * プレイヤーの回答が正解か不正解かを判定
+     */
+    private function isCorrectAnswer(array $selectedOptions, array $quizOptions)
+    {
+        $correctOptions = array_filter($quizOptions, function ($option) {
+            return $option['is_correct'] === 1;
+        });
+
+        $correctOptionIds = array_map(function ($option) {
+            return $option['id'];
+        }, $correctOptions);
+
+        if (count($selectedOptions) !== count($correctOptionIds)) {
+            return false;
+        }
+
+        foreach ($selectedOptions as $selectedOption) {
+            if (!in_array((int)$selectedOption, $correctOptionIds)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
