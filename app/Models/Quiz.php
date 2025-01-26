@@ -10,6 +10,8 @@ class Quiz extends Model
     /** @use HasFactory<\Database\Factories\QuizFactory> */
     use HasFactory;
 
+    protected $fillable = ['category_id', 'question', 'explanation'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

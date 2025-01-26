@@ -1,0 +1,4 @@
+src/lib/hash.lo: \
+  /Users/tatsuyakondo/Documents/SALTO/10期上期_クイズアプリ作成/quiz-app/xdebug-3.4.1/src/lib/hash.c \
+  /Users/tatsuyakondo/Documents/SALTO/10期上期_クイズアプリ作成/quiz-app/xdebug-3.4.1/src/lib/hash.h \
+  /Users/tatsuyakondo/Documents/SALTO/10期上期_クイズアプリ作成/quiz-app/xdebug-3.4.1/src/lib/llist.h

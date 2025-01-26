@@ -11,14 +11,6 @@ use Illuminate\Http\Request;
 class QuizController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * クイズ新規登録画面表示
      */
     public function create(Request $request, int $categoryId)
@@ -71,14 +63,6 @@ class QuizController extends Controller
         }
 
         return redirect()->route('admin.categories.show', ['categoryId' => $categoryId]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Quiz $quiz)
-    {
-        //
     }
 
     /**
