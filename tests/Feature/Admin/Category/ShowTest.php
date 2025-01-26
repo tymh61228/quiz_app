@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Category;
 
 use App\Models\Category;
 use App\Models\Option;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class CreateTest extends TestCase
+class ShowTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -39,26 +39,6 @@ class CreateTest extends TestCase
             'question' => '問題',
             'explanation' => '説明',
         ]);
-        $this->options = Option::create([
-            'quiz_id' => $this->quiz->id,
-            'content' => '選択肢1',
-            'is_correct' => 1,
-        ]);
-        $this->options = Option::create([
-            'quiz_id' => $this->quiz->id,
-            'content' => '選択肢2',
-            'is_correct' => 1,
-        ]);
-        $this->options = Option::create([
-            'quiz_id' => $this->quiz->id,
-            'content' => '選択肢3',
-            'is_correct' => 1,
-        ]);
-        $this->options = Option::create([
-            'quiz_id' => $this->quiz->id,
-            'content' => '選択肢4',
-            'is_correct' => 0,
-        ]);
     }
 
     /**
@@ -67,7 +47,7 @@ class CreateTest extends TestCase
     #[Test]
     public function ステータス200が返ること(): void
     {
-        $response = $this->get(route('admin.categories.create'));
+        $response = $this->get(route('admin.categories.show', ['categoryId' => $this->category->id]));
 
         $response->assertStatus(200);
     }
@@ -76,14 +56,22 @@ class CreateTest extends TestCase
      * @covers
      */
     #[Test]
-    public function カテゴリー新規登録画面が表示されること(): void
+    public function カテゴリー詳細画面が表示されること(): void
     {
-        $this->get(route('admin.categories.create'))
+        $this->get(route('admin.categories.show', ['categoryId' => $this->category->id]))
             ->assertSeeTextInOrder([
-                'Create Category',
-                'Category Name',
-                'Category Description',
+                'テストカテゴリー名1',
+                'テストカテゴリー説明文1',
+                'Edit',
                 'Create',
+                'ID',
+                'Quiz',
+                'Update Date',
+                'Edit',
+                // '4',
+                '問題',
+                'Edit',
+                'Delete',
             ]);
     }
 }

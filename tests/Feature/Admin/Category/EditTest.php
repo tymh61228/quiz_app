@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Category;
 
 use App\Models\Category;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class TopTest extends TestCase
+class EditTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -31,7 +31,6 @@ class TopTest extends TestCase
         $this->category = Category::create([
             'name' => 'テストカテゴリー名1',
             'description' => 'テストカテゴリー説明文1',
-            'updated_at' => '2025-01-01 00:00:00'
         ]);
     }
 
@@ -41,7 +40,7 @@ class TopTest extends TestCase
     #[Test]
     public function ステータス200が返ること(): void
     {
-        $response = $this->get(route('admin.top'));
+        $response = $this->get(route('admin.categories.edit', ['categoryId' => $this->category->id]));
 
         $response->assertStatus(200);
     }
@@ -50,21 +49,15 @@ class TopTest extends TestCase
      * @covers
      */
     #[Test]
-    public function 管理者トップ画面が表示されること(): void
+    public function カテゴリー編集画面が表示されること(): void
     {
-        $this->get(route('admin.top'))
+        $this->get(route('admin.categories.edit', ['categoryId' => $this->category->id]))
             ->assertSeeTextInOrder([
-                'Category',
-                'Create Category',
-                'ID',
+                'Edit Category',
                 'Category Name',
-                'Update Date',
-                'Detail',
-                'delete',
-                // '7',
-                'テストカテゴリー名1',
-                'Detail',
-                'Delete',
+                'Category Description',
+                'テストカテゴリー説明文1',
+                'Update',
             ]);
     }
 }

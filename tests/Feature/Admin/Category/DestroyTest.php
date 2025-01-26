@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Category;
 
 use App\Models\Category;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class EditTest extends TestCase
+class DestroyTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -38,26 +38,10 @@ class EditTest extends TestCase
      * @covers
      */
     #[Test]
-    public function ステータス200が返ること(): void
+    public function ステータス302が返ること(): void
     {
-        $response = $this->get(route('admin.categories.edit', ['categoryId' => $this->category->id]));
+        $response = $this->post(route('admin.categories.destroy', ['categoryId' => $this->category->id]));
 
-        $response->assertStatus(200);
-    }
-
-    /**
-     * @covers
-     */
-    #[Test]
-    public function カテゴリー編集画面が表示されること(): void
-    {
-        $this->get(route('admin.categories.edit', ['categoryId' => $this->category->id]))
-            ->assertSeeTextInOrder([
-                'Edit Category',
-                'Category Name',
-                'Category Description',
-                'テストカテゴリー説明文1',
-                'Update',
-            ]);
+        $response->assertStatus(302)->assertRedirect(route('admin.top'));;
     }
 }

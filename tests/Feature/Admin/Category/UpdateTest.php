@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Category;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class StoreTest extends TestCase
+class UpdateTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -26,6 +27,11 @@ class StoreTest extends TestCase
 
         // ユーザーとしてログイン
         $this->actingAs($user);
+
+        $this->category = Category::create([
+            'name' => 'テストカテゴリー名1',
+            'description' => 'テストカテゴリー説明文1',
+        ]);
     }
 
     /**
@@ -35,13 +41,14 @@ class StoreTest extends TestCase
     public function ステータス302が返ること(): void
     {
         $response = $this->post(route(
-            'admin.categories.store',
+            'admin.categories.update',
             [
+                'categoryId' => $this->category->id,
                 'name' => 'カテゴリー',
                 'description' => '説明',
             ]
         ));
 
-        $response->assertStatus(302)->assertRedirect(route('admin.top'));;
+        $response->assertStatus(302)->assertRedirect(route('admin.categories.show', ['categoryId' => $this->category->id]));;
     }
 }
